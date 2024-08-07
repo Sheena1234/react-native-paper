@@ -122,6 +122,11 @@ const DataTableExample = () => {
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
     numberOfItemsPerPageList[0]
   );
+  const [headers, setHeaders] = React.useState([
+    'Dessert',
+    'Calories per piece',
+    'Fat',
+  ]);
   const [modalVisible, setModalVisible] = React.useState(false);
   const sortedItems = items
     .slice()
@@ -192,12 +197,10 @@ const DataTableExample = () => {
   const emptyMatch = (array, key, searchStr) => {
     if (key == 'calories') {
       return array.filter((item) => {
-        console.log(searchStr);
         return item.calories == searchStr;
       });
     } else if (key == 'fat') {
       return array.filter((item) => {
-        console.log(searchStr);
         return item.fat == searchStr;
       });
     }
@@ -260,7 +263,10 @@ const DataTableExample = () => {
     <ScreenWrapper contentContainerStyle={styles.content}>
       <Card>
         <DataTable
-          config={{ headers: ['Dessert', 'Calories per piece', 'Fat'] }}
+          config={{ headers: headers,  }}
+          onDragRelease={(data: any) => {
+            setHeaders(data);
+          }}
         >
           <DataTable.Header>
             <DataTable.Title
@@ -273,7 +279,7 @@ const DataTableExample = () => {
               textStyle={styles.titleStyle}
               onLeftIconPress={() => {}}
             >
-              Dessert
+              {headers[0]}
             </DataTable.Title>
             <DataTable.Title
               numberOfLines={2}
@@ -288,7 +294,7 @@ const DataTableExample = () => {
                 setSortAscending(false);
               }}
             >
-              Calories per piece
+             {headers[1]}
             </DataTable.Title>
             <DataTable.Title
               onPress={() => {}}
@@ -296,7 +302,7 @@ const DataTableExample = () => {
               textStyle={styles.titleStyle}
               onLeftIconPress={() => {}}
             >
-              Fat (g)
+              {headers[2]}
             </DataTable.Title>
           </DataTable.Header>
           <DataTable.Header>
@@ -327,7 +333,7 @@ const DataTableExample = () => {
                   setItems(originalItems);
                 }
               }}
-              placeholder={'Search Dessert'}
+              placeholder={'Search ' + headers[0]}
             ></DataTable.CellSearch>
             <DataTable.CellSearch
               style={styles.searchStyle}
@@ -356,7 +362,7 @@ const DataTableExample = () => {
                   setItems(originalItems);
                 }
               }}
-              placeholder={'Search Calories'}
+              placeholder={'Search ' + headers[1]}
             ></DataTable.CellSearch>
             <DataTable.CellSearch
               style={styles.searchStyle}
@@ -385,20 +391,20 @@ const DataTableExample = () => {
                   setItems(originalItems);
                 }
               }}
-              placeholder={'Search Calories'}
+              placeholder={'Search ' + headers[2]}
             ></DataTable.CellSearch>
           </DataTable.Header>
 
           {sortedItems.slice(from, to).map((item) => (
             <DataTable.Row key={item.key} style={styles.bodyStyle}>
               <DataTable.Cell style={styles.bodyStyleItem}>
-                {item.name}
+                {headers[0] == "Dessert" ? item.name : headers[0] == 'Calories per piece' ? item.calories : headers[0] == "Fat" ? item.fat : ""  }
               </DataTable.Cell>
               <DataTable.Cell style={styles.bodyStyleItem} numeric>
-                {item.calories}
+              {headers[1] == "Dessert" ? item.name : headers[1] == 'Calories per piece' ? item.calories : headers[1] == "Fat" ? item.fat : ""  }
               </DataTable.Cell>
               <DataTable.Cell style={styles.bodyStyleItem} numeric>
-                {item.fat}
+              {headers[2] == "Dessert" ? item.name : headers[2] == 'Calories per piece' ? item.calories : headers[2] == "Fat" ? item.fat : ""  }
               </DataTable.Cell>
             </DataTable.Row>
           ))}

@@ -27,7 +27,6 @@ import DataTableTitle, {
 } from './DataTableTitle';
 import DataTableSearchCell from './DataTableSearchCell';
 import MaterialCommunityIcon from '../MaterialCommunityIcon';
-import { usePopover } from '../ModalPopover/usePopover';
 
 import DraggableGrid from '../DraggableGrid';
 
@@ -37,6 +36,7 @@ export type Props = React.ComponentPropsWithRef<typeof View> & {
    */
   children: React.ReactNode;
   config?: any;
+  onDragRelease?: (item: any) => void;
   style?: StyleProp<ViewStyle>;
 };
 
@@ -149,21 +149,25 @@ const renderItem = (item: { name: string; key: string }) => {
  * export default MyComponent;
  * ```
  */
-const DataTable = ({ children, style, config, ...rest }: Props) => {
+const DataTable = ({
+  children,
+  style,
+  config,
+  onDragRelease,
+  ...rest
+}: Props) => {
   const [isVisible, setIsVisible] = React.useState<boolean>(false);
 
-  const [data, setData] = React.useState<any>([
-    { name: 'Column One', key: 'one' },
-    { name: 'Column Two', key: 'two' },
-    { name: 'Column Three', key: 'three' },
-    { name: 'Column Four', key: 'four' },
-    { name: 'Column Five', key: 'five' },
-    { name: 'Column Six', key: 'six' },
-    { name: 'Column Seven', key: 'seven' },
-    { name: 'Column Eight', key: 'eight' },
-    { name: 'Column Nine', key: 'night' },
-    { name: 'Column Zero', key: 'zero' },
-  ]);
+  const _Data = config?.headers?.map((column: string, index: number) => {
+    // You can generate or define keys as needed
+    return {
+      name: column,
+      key: index.toString(),
+    };
+  });
+
+  const [data, setData] = React.useState<any>(_Data);
+
   return (
     <View {...rest} style={[styles.container, style]}>
       {config && (
@@ -198,7 +202,16 @@ const DataTable = ({ children, style, config, ...rest }: Props) => {
             <DraggableGrid
               data={data}
               renderItem={renderItem}
-              onDragRelease={(newData) => setData(newData)}
+              onDragRelease={(newData) => {
+                setData(newData);
+                if (onDragRelease) {
+                  const _data = newData.map((column: any) => {
+                    // You can generate or define keys as needed
+                    return column.name;
+                  });
+                  onDragRelease(_data);
+                }
+              }}
               numColumns={1}
               style={{ width: 300 }}
               itemHeight={40}
