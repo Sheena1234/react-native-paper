@@ -11,9 +11,9 @@ import ScreenWrapper from '../ScreenWrapper';
 
 type ItemsState = Array<{
   key: number;
-  name: string;
-  calories: number;
-  fat: number;
+  Dessert: string;
+  Calories: number;
+  Fat: number;
 }>;
 
 const DataTableExample = () => {
@@ -24,77 +24,77 @@ const DataTableExample = () => {
   const [originalItems] = React.useState<ItemsState>([
     {
       key: 1,
-      name: 'Cupcake',
-      calories: 356,
-      fat: 16,
+      Dessert: 'Cupcake',
+      Calories: 356,
+      Fat: 16,
     },
     {
       key: 2,
-      name: 'Eclair',
-      calories: 262,
-      fat: 16,
+      Dessert: 'Eclair',
+      Calories: 262,
+      Fat: 16,
     },
     {
       key: 3,
-      name: 'Frozen yogurt',
-      calories: 159,
-      fat: 6,
+      Dessert: 'Frozen yogurt',
+      Calories: 159,
+      Fat: 6,
     },
     {
       key: 4,
-      name: 'Gingerbread',
-      calories: 305,
-      fat: 3.7,
+      Dessert: 'Gingerbread',
+      Calories: 305,
+      Fat: 3.7,
     },
     {
       key: 5,
-      name: 'Ice cream sandwich',
-      calories: 237,
-      fat: 9,
+      Dessert: 'Ice cream sandwich',
+      Calories: 237,
+      Fat: 9,
     },
     {
       key: 6,
-      name: 'Jelly Bean',
-      calories: 375,
-      fat: 0,
+      Dessert: 'Jelly Bean',
+      Calories: 375,
+      Fat: 0,
     },
   ]);
   const [items, setItems] = React.useState<ItemsState>([
     {
       key: 1,
-      name: 'Cupcake',
-      calories: 356,
-      fat: 16,
+      Dessert: 'Cupcake',
+      Calories: 356,
+      Fat: 16,
     },
     {
       key: 2,
-      name: 'Eclair',
-      calories: 262,
-      fat: 16,
+      Dessert: 'Eclair',
+      Calories: 262,
+      Fat: 16,
     },
     {
       key: 3,
-      name: 'Frozen yogurt',
-      calories: 159,
-      fat: 6,
+      Dessert: 'Frozen yogurt',
+      Calories: 159,
+      Fat: 6,
     },
     {
       key: 4,
-      name: 'Gingerbread',
-      calories: 305,
-      fat: 3.7,
+      Dessert: 'Gingerbread',
+      Calories: 305,
+      Fat: 3.7,
     },
     {
       key: 5,
-      name: 'Ice cream sandwich',
-      calories: 237,
-      fat: 9,
+      Dessert: 'Ice cream sandwich',
+      Calories: 237,
+      Fat: 9,
     },
     {
       key: 6,
-      name: 'Jelly Bean',
-      calories: 375,
-      fat: 0,
+      Dessert: 'Jelly Bean',
+      Calories: 375,
+      Fat: 0,
     },
   ]);
 
@@ -122,18 +122,15 @@ const DataTableExample = () => {
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
     numberOfItemsPerPageList[0]
   );
-  const [headers, setHeaders] = React.useState([
-    'Dessert',
-    'Calories per piece',
-    'Fat',
-  ]);
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [headers, setHeaders] = React.useState(['Dessert', 'Calories', 'Fat']);
+
+  const [visibleColumns, setVisibleColumns] = React.useState(headers);
   const sortedItems = items
     .slice()
     .sort((item1, item2) =>
       sortAscending
-        ? item1.name.localeCompare(item2.name)
-        : item2.name.localeCompare(item1.name)
+        ? item1.Dessert.localeCompare(item2.Dessert)
+        : item2.Dessert.localeCompare(item1.Dessert)
     );
   const from = page * itemsPerPage;
   const to = Math.min((page + 1) * itemsPerPage, items.length);
@@ -143,7 +140,7 @@ const DataTableExample = () => {
   }, [itemsPerPage]);
 
   const likeMatch = (array, key, searchStr) => {
-    if (key === 'calories' || key === 'fat') {
+    if (key === 'Calories' || key === 'Fat') {
       return array.filter((item) => {
         const itemValue = item[key].toString();
         const searchValue = searchStr.toString();
@@ -156,7 +153,7 @@ const DataTableExample = () => {
   };
 
   const unlikeMatch = (array, key, searchStr) => {
-    if (key === 'calories' || key === 'fat') {
+    if (key === 'Calories' || key === 'Fat') {
       return array.filter((item) => {
         const itemValue = item[key].toString();
         const searchValue = searchStr.toString();
@@ -169,7 +166,7 @@ const DataTableExample = () => {
   };
 
   const equalMatch = (array, key, searchStr) => {
-    if (key === 'calories' || key === 'fat') {
+    if (key === 'Calories' || key === 'Fat') {
       return array.filter((item) => {
         const itemValue = item[key].toString();
         const searchValue = searchStr.toString();
@@ -182,7 +179,7 @@ const DataTableExample = () => {
   };
 
   const notEqualMatch = (array, key, searchStr) => {
-    if (key === 'calories' || key === 'fat') {
+    if (key === 'Calories' || key === 'Fat') {
       return array.filter((item) => {
         const itemValue = item[key].toString();
         const searchValue = searchStr.toString();
@@ -195,35 +192,35 @@ const DataTableExample = () => {
   };
 
   const emptyMatch = (array, key, searchStr) => {
-    if (key == 'calories') {
+    if (key === 'Calories') {
       return array.filter((item) => {
-        return item.calories == searchStr;
+        return item.Calories == searchStr;
       });
-    } else if (key == 'fat') {
+    } else if (key == 'Fat') {
       return array.filter((item) => {
-        return item.fat == searchStr;
+        return item.Fat == searchStr;
       });
     }
     return array.filter((item) => item[key].name.toLowerCase().length === 0);
   };
 
   const notEmptyMatch = (array, key, searchStr) => {
-    if (key == 'calories') {
+    if (key === 'Calories') {
       return array.filter((item) => {
         console.log(searchStr);
-        return item.calories == searchStr;
+        return item.Calories == searchStr;
       });
-    } else if (key == 'fat') {
+    } else if (key == 'Fat') {
       return array.filter((item) => {
         console.log(searchStr);
-        return item.fat == searchStr;
+        return item.Fat == searchStr;
       });
     }
     return array.filter((item) => item[key].name.toLowerCase().length !== 0);
   };
 
   const startsWithMatch = (array, key, searchStr) => {
-    if (key === 'calories' || key === 'fat') {
+    if (key === 'Calories' || key === 'Fat') {
       return array.filter((item) => {
         const itemValue = item[key].toString();
         const searchValue = searchStr.toString();
@@ -236,7 +233,7 @@ const DataTableExample = () => {
   };
 
   const endsWithMatch = (array, key, searchStr) => {
-    if (key === 'calories' || key === 'fat') {
+    if (key === 'Calories' || key === 'Fat') {
       return array.filter((item) => {
         const itemValue = item[key].toString();
         const searchValue = searchStr.toString();
@@ -259,51 +256,40 @@ const DataTableExample = () => {
     { id: 8, name: 'Ends with' },
   ];
 
+  const handleCheckboxPress = (item) => {
+    setVisibleColumns((prevSelected) => {
+      // If the item is already selected, remove it
+      if (prevSelected.includes(item)) {
+        return prevSelected.filter((selectedItem) => selectedItem !== item);
+      }
+      // Otherwise, add it to the selected items
+      return [...prevSelected, item];
+    });
+    console.log(visibleColumns);
+  };
+
   return (
     <ScreenWrapper contentContainerStyle={styles.content}>
       <Card>
         <DataTable
-          config={{ headers: headers,  }}
+          config={{ headers: headers }}
           onDragRelease={(data: any) => {
             setHeaders(data);
           }}
+          handleCheckboxPress={handleCheckboxPress}
+          checkedKeys={visibleColumns}
         >
           <DataTable.Header>
-            <DataTable.Title
-              sortDirection={sortAscending ? 'ascending' : 'descending'}
-              onPress={() => {
-                setSortAscending(!sortAscending);
-              }}
-              leftIconConfig={leftIconConfig}
-              style={styles.first}
-              textStyle={styles.titleStyle}
-              onLeftIconPress={() => {}}
-            >
-              {headers[0]}
-            </DataTable.Title>
-            <DataTable.Title
-              numberOfLines={2}
-              onPress={() => {}}
-              onLeftIconPress={() => {}}
-              style={styles.first}
-              textStyle={styles.titleStyle}
-              onPressAsc={() => {
-                setSortAscending(true);
-              }}
-              onPressDes={() => {
-                setSortAscending(false);
-              }}
-            >
-             {headers[1]}
-            </DataTable.Title>
-            <DataTable.Title
-              onPress={() => {}}
-              style={styles.first}
-              textStyle={styles.titleStyle}
-              onLeftIconPress={() => {}}
-            >
-              {headers[2]}
-            </DataTable.Title>
+            {visibleColumns.map((header, index) => (
+              <DataTable.Title
+                onPress={() => {}}
+                style={styles.first}
+                textStyle={styles.titleStyle}
+                onLeftIconPress={() => {}}
+              >
+                {header}
+              </DataTable.Title>
+            ))}
           </DataTable.Header>
           <DataTable.Header>
             <DataTable.CellSearch
@@ -313,21 +299,21 @@ const DataTableExample = () => {
               onChangeText={(text) => {
                 if (text.length) {
                   if (filteredOption === 'Contain') {
-                    setItems(likeMatch(originalItems, 'name', text));
+                    setItems(likeMatch(originalItems, headers[0], text));
                   } else if (filteredOption === 'Does not contain') {
-                    setItems(unlikeMatch(originalItems, 'name', text));
+                    setItems(unlikeMatch(originalItems, headers[0], text));
                   } else if (filteredOption === 'Equals') {
-                    setItems(equalMatch(originalItems, 'name', text));
+                    setItems(equalMatch(originalItems, headers[0], text));
                   } else if (filteredOption === 'Does not equal') {
-                    setItems(notEqualMatch(originalItems, 'name', text));
+                    setItems(notEqualMatch(originalItems, headers[0], text));
                   } else if (filteredOption === 'Empty') {
-                    setItems(emptyMatch(originalItems, 'name', text));
+                    setItems(emptyMatch(originalItems, headers[0], text));
                   } else if (filteredOption === 'Not empty') {
-                    setItems(notEmptyMatch(originalItems, 'name', text));
+                    setItems(notEmptyMatch(originalItems, headers[0], text));
                   } else if (filteredOption === 'Starts with') {
-                    setItems(startsWithMatch(originalItems, 'name', text));
+                    setItems(startsWithMatch(originalItems, headers[0], text));
                   } else if (filteredOption === 'Ends with') {
-                    setItems(endsWithMatch(originalItems, 'name', text));
+                    setItems(endsWithMatch(originalItems, headers[0], text));
                   }
                 } else {
                   setItems(originalItems);
@@ -342,21 +328,21 @@ const DataTableExample = () => {
               onChangeText={(text) => {
                 if (text.length) {
                   if (filteredOption === 'Contain') {
-                    setItems(likeMatch(originalItems, 'calories', text));
+                    setItems(likeMatch(originalItems, headers[1], text));
                   } else if (filteredOption === 'Does not contain') {
-                    setItems(unlikeMatch(originalItems, 'calories', text));
+                    setItems(unlikeMatch(originalItems, headers[1], text));
                   } else if (filteredOption === 'Equals') {
-                    setItems(equalMatch(originalItems, 'calories', text));
+                    setItems(equalMatch(originalItems, headers[1], text));
                   } else if (filteredOption === 'Does not equal') {
-                    setItems(notEqualMatch(originalItems, 'calories', text));
+                    setItems(notEqualMatch(originalItems, headers[1], text));
                   } else if (filteredOption === 'Empty') {
-                    setItems(emptyMatch(originalItems, 'calories', text));
+                    setItems(emptyMatch(originalItems, headers[1], text));
                   } else if (filteredOption === 'Not empty') {
-                    setItems(notEmptyMatch(originalItems, 'calories', text));
+                    setItems(notEmptyMatch(originalItems, headers[1], text));
                   } else if (filteredOption === 'Starts with') {
-                    setItems(startsWithMatch(originalItems, 'calories', text));
+                    setItems(startsWithMatch(originalItems, headers[1], text));
                   } else if (filteredOption === 'Ends with') {
-                    setItems(endsWithMatch(originalItems, 'calories', text));
+                    setItems(endsWithMatch(originalItems, headers[1], text));
                   }
                 } else {
                   setItems(originalItems);
@@ -371,21 +357,21 @@ const DataTableExample = () => {
               onChangeText={(text) => {
                 if (text.length) {
                   if (filteredOption === 'Contain') {
-                    setItems(likeMatch(originalItems, 'fat', text));
+                    setItems(likeMatch(originalItems, headers[2], text));
                   } else if (filteredOption === 'Does not contain') {
-                    setItems(unlikeMatch(originalItems, 'fat', text));
+                    setItems(unlikeMatch(originalItems, headers[2], text));
                   } else if (filteredOption === 'Equals') {
-                    setItems(equalMatch(originalItems, 'fat', text));
+                    setItems(equalMatch(originalItems, headers[2], text));
                   } else if (filteredOption === 'Does not equal') {
-                    setItems(notEqualMatch(originalItems, 'fat', text));
+                    setItems(notEqualMatch(originalItems, headers[2], text));
                   } else if (filteredOption === 'Empty') {
-                    setItems(emptyMatch(originalItems, 'fat', text));
+                    setItems(emptyMatch(originalItems, headers[2], text));
                   } else if (filteredOption === 'Not empty') {
-                    setItems(notEmptyMatch(originalItems, 'fat', text));
+                    setItems(notEmptyMatch(originalItems, headers[2], text));
                   } else if (filteredOption === 'Starts with') {
-                    setItems(startsWithMatch(originalItems, 'fat', text));
+                    setItems(startsWithMatch(originalItems, headers[2], text));
                   } else if (filteredOption === 'Ends with') {
-                    setItems(endsWithMatch(originalItems, 'fat', text));
+                    setItems(endsWithMatch(originalItems, headers[2], text));
                   }
                 } else {
                   setItems(originalItems);
@@ -398,13 +384,31 @@ const DataTableExample = () => {
           {sortedItems.slice(from, to).map((item) => (
             <DataTable.Row key={item.key} style={styles.bodyStyle}>
               <DataTable.Cell style={styles.bodyStyleItem}>
-                {headers[0] == "Dessert" ? item.name : headers[0] == 'Calories per piece' ? item.calories : headers[0] == "Fat" ? item.fat : ""  }
+                {headers[0] == 'Dessert'
+                  ? item.Dessert
+                  : headers[0] == 'Calories'
+                  ? item.Calories
+                  : headers[0] == 'Fat'
+                  ? item.Fat
+                  : ''}
               </DataTable.Cell>
               <DataTable.Cell style={styles.bodyStyleItem} numeric>
-              {headers[1] == "Dessert" ? item.name : headers[1] == 'Calories per piece' ? item.calories : headers[1] == "Fat" ? item.fat : ""  }
+                {headers[1] == 'Dessert'
+                  ? item.Dessert
+                  : headers[1] == 'Calories'
+                  ? item.Calories
+                  : headers[1] == 'Fat'
+                  ? item.Fat
+                  : ''}
               </DataTable.Cell>
               <DataTable.Cell style={styles.bodyStyleItem} numeric>
-              {headers[2] == "Dessert" ? item.name : headers[2] == 'Calories per piece' ? item.calories : headers[2] == "Fat" ? item.fat : ""  }
+                {headers[2] == 'Dessert'
+                  ? item.Dessert
+                  : headers[2] == 'Calories'
+                  ? item.Calories
+                  : headers[2] == 'Fat'
+                  ? item.Fat
+                  : ''}
               </DataTable.Cell>
             </DataTable.Row>
           ))}

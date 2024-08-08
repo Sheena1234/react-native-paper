@@ -28,6 +28,7 @@ import DataTableTitle, {
 import DataTableSearchCell from './DataTableSearchCell';
 import MaterialCommunityIcon from '../MaterialCommunityIcon';
 
+import { Checkbox } from 'react-native-paper';
 import DraggableGrid from '../DraggableGrid';
 
 export type Props = React.ComponentPropsWithRef<typeof View> & {
@@ -37,33 +38,9 @@ export type Props = React.ComponentPropsWithRef<typeof View> & {
   children: React.ReactNode;
   config?: any;
   onDragRelease?: (item: any) => void;
+  handleCheckboxPress?: (item: any) => void;
+  checkedKeys?: any;
   style?: StyleProp<ViewStyle>;
-};
-
-const renderItem = (item: { name: string; key: string }) => {
-  // console.log(item);
-
-  return (
-    <View
-      style={{
-        width: 200,
-        height: 50,
-        backgroundColor: 'black',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-      key={item.key}
-    >
-      <Text
-        style={{
-          fontSize: 14,
-          color: '#FFFFFF',
-        }}
-      >
-        {item.name}
-      </Text>
-    </View>
-  );
 };
 
 /**
@@ -154,6 +131,8 @@ const DataTable = ({
   style,
   config,
   onDragRelease,
+  handleCheckboxPress,
+  checkedKeys,
   ...rest
 }: Props) => {
   const [isVisible, setIsVisible] = React.useState<boolean>(false);
@@ -167,6 +146,30 @@ const DataTable = ({
   });
 
   const [data, setData] = React.useState<any>(_Data);
+
+  const renderItem = (item: { name: string; key: string }) => {
+    // console.log(item);
+     const isChecked = checkedKeys.includes(item.name);
+
+    return (
+      <View
+        style={{
+          width: 200,
+          height: 50,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        key={item.key}
+      >
+         <Checkbox.Item
+          style={{ justifyContent: 'space-between', width: '100%' }}
+          label={item.name}
+          status={isChecked ? 'checked' : 'unchecked'}
+          onPress={() => handleCheckboxPress(item.name)}
+        />
+      </View>
+    );
+  };
 
   return (
     <View {...rest} style={[styles.container, style]}>
