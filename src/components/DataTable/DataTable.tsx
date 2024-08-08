@@ -144,7 +144,7 @@ const DataTable = ({
       key: index.toString(),
     };
   });
-
+console.log({_Data})
   const [data, setData] = React.useState<any>(_Data);
 
   const renderItem = (item: { name: string; key: string }) => {
@@ -165,7 +165,7 @@ const DataTable = ({
           style={{ justifyContent: 'space-between', width: '100%' }}
           label={item.name}
           status={isChecked ? 'checked' : 'unchecked'}
-          onPress={() => handleCheckboxPress(item.name)}
+          onPress={() => handleCheckboxPress && handleCheckboxPress(item.name)}
         />
       </View>
     );

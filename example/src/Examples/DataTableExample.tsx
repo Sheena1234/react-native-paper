@@ -124,7 +124,6 @@ const DataTableExample = () => {
   );
   const [headers, setHeaders] = React.useState(['Dessert', 'Calories', 'Fat']);
 
-  const [visibleColumns, setVisibleColumns] = React.useState(headers);
   const sortedItems = items
     .slice()
     .sort((item1, item2) =>
@@ -257,7 +256,7 @@ const DataTableExample = () => {
   ];
 
   const handleCheckboxPress = (item) => {
-    setVisibleColumns((prevSelected) => {
+    setHeaders((prevSelected) => {
       // If the item is already selected, remove it
       if (prevSelected.includes(item)) {
         return prevSelected.filter((selectedItem) => selectedItem !== item);
@@ -265,7 +264,6 @@ const DataTableExample = () => {
       // Otherwise, add it to the selected items
       return [...prevSelected, item];
     });
-    console.log(visibleColumns);
   };
 
   return (
@@ -277,10 +275,10 @@ const DataTableExample = () => {
             setHeaders(data);
           }}
           handleCheckboxPress={handleCheckboxPress}
-          checkedKeys={visibleColumns}
+          checkedKeys={headers}
         >
           <DataTable.Header>
-            {visibleColumns.map((header, index) => (
+            {headers.map((header, index) => (
               <DataTable.Title
                 onPress={() => {}}
                 style={styles.first}
@@ -383,6 +381,8 @@ const DataTableExample = () => {
 
           {sortedItems.slice(from, to).map((item) => (
             <DataTable.Row key={item.key} style={styles.bodyStyle}>
+
+             { 
               <DataTable.Cell style={styles.bodyStyleItem}>
                 {headers[0] == 'Dessert'
                   ? item.Dessert
@@ -392,7 +392,9 @@ const DataTableExample = () => {
                   ? item.Fat
                   : ''}
               </DataTable.Cell>
-              <DataTable.Cell style={styles.bodyStyleItem} numeric>
+              }
+              { headers.length == 3 && 
+                <DataTable.Cell style={styles.bodyStyleItem} numeric>
                 {headers[1] == 'Dessert'
                   ? item.Dessert
                   : headers[1] == 'Calories'
@@ -401,7 +403,8 @@ const DataTableExample = () => {
                   ? item.Fat
                   : ''}
               </DataTable.Cell>
-              <DataTable.Cell style={styles.bodyStyleItem} numeric>
+              }
+            { headers.length == 3 &&   <DataTable.Cell style={styles.bodyStyleItem} numeric>
                 {headers[2] == 'Dessert'
                   ? item.Dessert
                   : headers[2] == 'Calories'
@@ -409,7 +412,7 @@ const DataTableExample = () => {
                   : headers[2] == 'Fat'
                   ? item.Fat
                   : ''}
-              </DataTable.Cell>
+              </DataTable.Cell>}
             </DataTable.Row>
           ))}
 
