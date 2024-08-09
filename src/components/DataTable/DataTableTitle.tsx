@@ -150,16 +150,16 @@ const DataTableTitle = ({
     touchableRef,
     popoverAnchorRect,
   } = usePopover();
-  // const icon = sortDirection ? (
-  //   <Animated.View style={[styles.icon, { transform: [{ rotate: spin }] }]}>
-  //     <MaterialCommunityIcon
-  //       name="arrow-up"
-  //       size={16}
-  //       color={textColor}
-  //       direction={I18nManager.getConstants().isRTL ? 'rtl' : 'ltr'}
-  //     />
-  //   </Animated.View>
-  // ) : null;
+  const icon = sortDirection ? (
+    <Animated.View style={[styles.icon, { transform: [{ rotate: spin }] }]}>
+      <MaterialCommunityIcon
+        name="arrow-up"
+        size={16}
+        color={textColor}
+        direction={I18nManager.getConstants().isRTL ? 'rtl' : 'ltr'}
+      />
+    </Animated.View>
+  ) : null;
 
   const iconFilter = filterOption ? (
     <TouchableOpacity onPress={openPopover} ref={touchableRef}>
@@ -204,9 +204,9 @@ const DataTableTitle = ({
       >
         {children}
       </Text>
-
-      {iconFilter}
-      <Popover
+{icon}
+      {leftIconConfig && iconFilter}
+      {leftIconConfig && <Popover
         popoverStyle={{
           top: origin.y,
           left: origin.x,
@@ -239,7 +239,7 @@ const DataTableTitle = ({
             leftIconConfig={leftIconConfig}
           />
         )}
-      </Popover>
+      </Popover>}
     </Pressable>
   );
 };

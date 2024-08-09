@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Animated,
   Text,
+  FlatList,
 } from 'react-native';
 
 import DataTableCell from './DataTableCell';
@@ -26,6 +27,8 @@ import DataTableTitle, {
 } from './DataTableTitle';
 import DataTableSearchCell from './DataTableSearchCell';
 import MaterialCommunityIcon from '../MaterialCommunityIcon';
+
+import { Checkbox } from 'react-native-paper';
 import DraggableGrid from '../DraggableGrid';
 
 export type Props = React.ComponentPropsWithRef<typeof View> & {
@@ -144,6 +147,8 @@ const DataTable = ({
   const [data, setData] = React.useState<any>(_Data);
 
   const renderItem = (item: { name: string; key: string }) => {
+    // console.log(item);
+     const isChecked = checkedKeys.includes(item.name);
 
     return (
       <View

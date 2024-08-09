@@ -1,19 +1,21 @@
 import * as React from 'react';
+import { StyleSheet, TouchableOpacity, View, Text, Button } from 'react-native';
 import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
-import { DataTable, Card } from 'react-native-paper';
+  DataTable,
+  Card,
+  Checkbox,
+  MD2Colors,
+  MD3Colors,
+} from 'react-native-paper';
 import ScreenWrapper from '../ScreenWrapper';
-
+import { useExampleTheme } from '..';
+import { ScrollView } from 'react-native-gesture-handler';
 type ItemsState = Array<{
   key: number;
   Dessert: string;
   Calories: number;
   Fat: number;
+  checked: boolean;
 }>;
 
 const DataTableExample = () => {
@@ -27,36 +29,43 @@ const DataTableExample = () => {
       Dessert: 'Cupcake',
       Calories: 356,
       Fat: 16,
+      checked: false,
     },
     {
       key: 2,
       Dessert: 'Eclair',
       Calories: 262,
       Fat: 16,
+      checked: false,
     },
     {
       key: 3,
       Dessert: 'Frozen yogurt',
       Calories: 159,
       Fat: 6,
+      checked: false,
     },
     {
       key: 4,
       Dessert: 'Gingerbread',
       Calories: 305,
       Fat: 3.7,
+
+      checked: false,
     },
     {
       key: 5,
       Dessert: 'Ice cream sandwich',
       Calories: 237,
       Fat: 9,
+      checked: false,
     },
     {
       key: 6,
       Dessert: 'Jelly Bean',
       Calories: 375,
       Fat: 0,
+      checked: false,
     },
   ]);
   const [items, setItems] = React.useState<ItemsState>([
@@ -65,36 +74,42 @@ const DataTableExample = () => {
       Dessert: 'Cupcake',
       Calories: 356,
       Fat: 16,
+      checked: false,
     },
     {
       key: 2,
       Dessert: 'Eclair',
       Calories: 262,
       Fat: 16,
+      checked: false,
     },
     {
       key: 3,
       Dessert: 'Frozen yogurt',
       Calories: 159,
       Fat: 6,
+      checked: false,
     },
     {
       key: 4,
       Dessert: 'Gingerbread',
       Calories: 305,
       Fat: 3.7,
+      checked: false,
     },
     {
       key: 5,
       Dessert: 'Ice cream sandwich',
       Calories: 237,
       Fat: 9,
+      checked: false,
     },
     {
       key: 6,
       Dessert: 'Jelly Bean',
       Calories: 375,
       Fat: 0,
+      checked: false,
     },
   ]);
 
@@ -122,8 +137,9 @@ const DataTableExample = () => {
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
     numberOfItemsPerPageList[0]
   );
+  const [allSelected, setAllSelected] = React.useState<boolean>(false);
   const [headers, setHeaders] = React.useState(['Dessert', 'Calories', 'Fat']);
-
+  const { isV3 } = useExampleTheme();
   const sortedItems = items
     .slice()
     .sort((item1, item2) =>
@@ -277,19 +293,96 @@ const DataTableExample = () => {
           handleCheckboxPress={handleCheckboxPress}
           checkedKeys={headers}
         >
+          <View style={{ margin: 5, marginRight: 5, flexDirection: 'row' }}>
+            <Text style={{ marginHorizontal: 10 }}>{`Total rows selected ${
+              items.filter((item) => item.checked).length
+            }`}</Text>
+            <Button
+              title="Delete"
+              color="red"
+              onPress={() => {
+                const remainingItems = items.filter((item) => !item.checked);
+                setItems(remainingItems);
+              }}
+            />
+          </View>
           <DataTable.Header>
-            {headers.map((header, index) => (
-              <DataTable.Title
-                onPress={() => {}}
-                style={styles.first}
-                textStyle={styles.titleStyle}
-                onLeftIconPress={() => {}}
-              >
-                {header}
-              </DataTable.Title>
-            ))}
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1 }}>
+                <DataTable.Title
+                  style={{
+                    borderColor: 'grey',
+                    borderBottomWidth: 1,
+                    borderRightWidth: 1,
+                    paddingHorizontal: 5}}
+                  textStyle={styles.titleStyle}
+                  onPress={() => {
+                    setAllSelected(!allSelected);
+                    const updatedItems = items.map((item) => ({
+                      ...item,
+                      checked: !allSelected,
+                    }));
+
+                    setItems(updatedItems);
+                  }}
+                >
+                  <Checkbox
+                    color={isV3 ? MD3Colors.error70 : MD2Colors.blue500}
+                    status={allSelected ? 'checked' : 'unchecked'}
+                  />
+                </DataTable.Title>
+              </View>
+              <View style={{ flex: 3, flexDirection: 'row' }}>
+                <DataTable.Title
+                  sortDirection={sortAscending ? 'ascending' : 'descending'}
+                  onPress={() => {
+                    setSortAscending(!sortAscending);
+                  }}
+                  // leftIconConfig={leftIconConfig}
+                  style={styles.first}
+                  textStyle={styles.titleStyle}
+                  onLeftIconPress={() => {}}
+                >
+                  {headers[0]}
+                </DataTable.Title>
+                <DataTable.Title
+                  numberOfLines={2}
+                  onPress={() => {}}
+                  onLeftIconPress={() => {}}
+                  style={styles.first}
+                  textStyle={styles.titleStyle}
+                  onPressAsc={() => {
+                    setSortAscending(true);
+                  }}
+                  onPressDes={() => {
+                    setSortAscending(false);
+                  }}
+                >
+                  {headers[1]}
+                </DataTable.Title>
+                <DataTable.Title
+                  onPress={() => {}}
+                  style={styles.first}
+                  textStyle={styles.titleStyle}
+                  onLeftIconPress={() => {}}
+                >
+                  {headers[2]}
+                </DataTable.Title>
+              </View>
+            </View>
           </DataTable.Header>
           <DataTable.Header>
+            <DataTable.Cell
+              style={{
+                borderColor: 'grey',
+                borderBottomWidth: 1,
+                borderRightWidth: 1,
+                paddingHorizontal: 5,
+                width: 2,
+              }}
+            >
+              {''}
+            </DataTable.Cell>
             <DataTable.CellSearch
               style={styles.searchStyle}
               searchFilterData={filterData}
@@ -378,44 +471,91 @@ const DataTableExample = () => {
               placeholder={'Search ' + headers[2]}
             ></DataTable.CellSearch>
           </DataTable.Header>
+          <View style={{ flexDirection: 'row' }}>
+            <View>
+              {sortedItems.slice(from, to).map((item) => (
+                <DataTable.Row
+                  key={item.key}
+                  style={styles.bodyStyle}
+                  onPress={() => {}}
+                >
+                  <DataTable.Cell
+                    style={styles.bodyStyleItem}
+                    onPress={() => {
+                      console.log('hello........');
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => {
+                        console.log('hello........');
+                        const updatedItems = items.map((i) => {
+                          if (item.key === i.key) {
+                            return {
+                              ...i,
+                              checked: !i.checked,
+                            };
+                          } else {
+                            return {
+                              ...i,
+                            };
+                          }
+                        });
+                        setItems(updatedItems);
+                      }}
+                    >
+                      <Checkbox
+                        color={isV3 ? MD3Colors.error70 : MD2Colors.blue500}
+                        status={item.checked ? 'checked' : 'unchecked'}
+                      />
+                    </TouchableOpacity>
+                  </DataTable.Cell>
+                </DataTable.Row>
+              ))}
+            </View>
+            <View style={{ flex: 3 }}>
+              {sortedItems.slice(from, to).map((item) => (
+                <DataTable.Row
+                  key={item.key}
+                  style={styles.bodyStyle}
+                  onPress={() => {}}
+                >
+                  <DataTable.Cell
+                    style={styles.bodyStyleItem}
+                    onPress={() => {
+                      console.log('hellooooo');
+                    }}
+                  >
+                    {headers[0] == 'Dessert'
+                      ? item.Dessert
+                      : headers[0] == 'Calories'
+                      ? item.Calories
+                      : headers[0] == 'Fat'
+                      ? item.Fat
+                      : ''}
+                  </DataTable.Cell>
+                  <DataTable.Cell style={styles.bodyStyleItem} numeric>
+                    {headers[1] == 'Dessert'
+                      ? item.Dessert
+                      : headers[1] == 'Calories'
+                      ? item.Calories
+                      : headers[1] == 'Fat'
+                      ? item.Fat
+                      : ''}
+                  </DataTable.Cell>
 
-          {sortedItems.slice(from, to).map((item) => (
-            <DataTable.Row key={item.key} style={styles.bodyStyle}>
-
-             { 
-              <DataTable.Cell style={styles.bodyStyleItem}>
-                {headers[0] == 'Dessert'
-                  ? item.Dessert
-                  : headers[0] == 'Calories'
-                  ? item.Calories
-                  : headers[0] == 'Fat'
-                  ? item.Fat
-                  : ''}
-              </DataTable.Cell>
-              }
-              { headers.length == 3 && 
-                <DataTable.Cell style={styles.bodyStyleItem} numeric>
-                {headers[1] == 'Dessert'
-                  ? item.Dessert
-                  : headers[1] == 'Calories'
-                  ? item.Calories
-                  : headers[1] == 'Fat'
-                  ? item.Fat
-                  : ''}
-              </DataTable.Cell>
-              }
-            { headers.length == 3 &&   <DataTable.Cell style={styles.bodyStyleItem} numeric>
-                {headers[2] == 'Dessert'
-                  ? item.Dessert
-                  : headers[2] == 'Calories'
-                  ? item.Calories
-                  : headers[2] == 'Fat'
-                  ? item.Fat
-                  : ''}
-              </DataTable.Cell>}
-            </DataTable.Row>
-          ))}
-
+                  <DataTable.Cell style={styles.bodyStyleItem} numeric>
+                    {headers[2] == 'Dessert'
+                      ? item.Dessert
+                      : headers[2] == 'Calories'
+                      ? item.Calories
+                      : headers[2] == 'Fat'
+                      ? item.Fat
+                      : ''}
+                  </DataTable.Cell>
+                </DataTable.Row>
+              ))}
+            </View>
+          </View>
           <DataTable.Pagination
             page={page}
             numberOfPages={Math.ceil(sortedItems.length / itemsPerPage)}

@@ -70,6 +70,7 @@ const DataTableCell = ({
   style,
   numeric,
   maxFontSizeMultiplier,
+  onPress,
   testID,
   ...rest
 }: Props) => {
@@ -78,6 +79,7 @@ const DataTableCell = ({
       {...rest}
       testID={testID}
       style={[styles.container, numeric && styles.right, style]}
+      onPress={onPress}
     >
       <CellContent
         textStyle={textStyle}
@@ -109,6 +111,7 @@ const CellContent = ({
       numberOfLines={1}
       maxFontSizeMultiplier={maxFontSizeMultiplier}
       testID={`${testID}-text-container`}
+     
     >
       {children}
     </Text>
