@@ -27,6 +27,7 @@ import DataTableTitle, {
 import DataTableSearchCell from './DataTableSearchCell';
 import MaterialCommunityIcon from '../MaterialCommunityIcon';
 import DraggableGrid from '../DraggableGrid';
+import Checkbox from '../Checkbox';
 
 export type Props = React.ComponentPropsWithRef<typeof View> & {
   /**
@@ -144,25 +145,41 @@ const DataTable = ({
   const [data, setData] = React.useState<any>(_Data);
 
   const renderItem = (item: { name: string; key: string }) => {
-
     return (
       <View
         style={{
           width: 200,
           height: 50,
-          justifyContent: 'center',
+          justifyContent: 'space-between',
           alignItems: 'center',
+          flexDirection: 'row',
         }}
         key={item.key}
       >
-         <Text
-        style={{
-          fontSize: 14,
-          color: 'black',
-        }}
-      >
-        {item.name}
-      </Text>
+        <TouchableOpacity
+          onPress={() => {
+            let columnsVis = { ...config.columnVisibility };
+            config.setColumnVisibility({
+              ...columnsVis,
+              [item.name]: !columnsVis[item.name],
+            });
+          }}
+        >
+          <Checkbox
+            color={'blue'}
+            status={
+              config.columnVisibility[item.name] ? 'checked' : 'unchecked'
+            }
+          />
+        </TouchableOpacity>
+        <Text
+          style={{
+            fontSize: 14,
+            color: 'black',
+          }}
+        >
+          {item.name}
+        </Text>
       </View>
     );
   };
