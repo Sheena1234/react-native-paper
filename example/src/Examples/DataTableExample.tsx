@@ -113,7 +113,7 @@ const DataTableExample = () => {
     },
   ]);
   const [columnVisibility, setColumnVisibility] = React.useState({
-    Dessert: false,
+    Dessert: true,
     Calories: true,
     Fat: true,
   });
