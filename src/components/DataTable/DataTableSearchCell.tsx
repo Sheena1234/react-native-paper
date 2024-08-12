@@ -124,7 +124,7 @@ const DataTableSearchCell = ({
         <MaterialCommunityIcon
           name="filter"
           size={20}
-          color={'black'}
+          color={'rgb(115, 75, 209)'}
           direction={'ltr'}
         />
       </View>

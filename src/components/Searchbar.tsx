@@ -303,7 +303,8 @@ const Searchbar = forwardRef<TextInputHandles, Props>(
             (({ size, color }) => (
               <MaterialCommunityIcon
                 name="magnify"
-                color={color}
+                // color={color}
+                color={'rgb(115, 75, 209)'}
                 size={size}
                 direction={I18nManager.getConstants().isRTL ? 'rtl' : 'ltr'}
               />
@@ -325,7 +326,8 @@ const Searchbar = forwardRef<TextInputHandles, Props>(
             inputStyle,
           ]}
           placeholder={placeholder || ''}
-          placeholderTextColor={placeholderTextColor}
+          // placeholderTextColor={placeholderTextColor}
+          placeholderTextColor={'rgb(115, 75, 209)'}
           selectionColor={theme.colors?.primary}
           underlineColorAndroid="transparent"
           returnKeyType="search"

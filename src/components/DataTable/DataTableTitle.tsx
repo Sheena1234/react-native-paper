@@ -186,7 +186,7 @@ const DataTableTitle = ({
         style={[
           styles.cell,
           // height must scale with numberOfLines
-          { maxHeight: 24 * numberOfLines },
+          { maxHeight: 28 * numberOfLines },
           // if numberOfLines causes wrap, center is lost. Align directly, sensitive to numeric and RTL
           numberOfLines > 1
             ? numeric
@@ -197,7 +197,7 @@ const DataTableTitle = ({
             : {},
           sortDirection ? styles.sorted : { color: alphaTextColor },
           textStyle,
-          { alignSelf: 'center' },
+          { alignSelf: 'center', color: 'rgb(115, 75, 209)', },
         ]}
         numberOfLines={numberOfLines}
         maxFontSizeMultiplier={maxFontSizeMultiplier}

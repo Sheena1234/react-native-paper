@@ -305,208 +305,204 @@ const DataTableExample = () => {
           checkedKeys={headers}
         >
           <View
-            style={{ margin: 5, alignItems: 'center', flexDirection: 'row' }}
+            style={{ paddingLeft: 16, alignItems: 'center', flexDirection: 'row' }}
           >
-            <Text style={{ marginHorizontal: 10 }}>{`Total rows selected ${
+            <Text style={{ fontSize: 20, fontWeight: '500', fontStyle: 'normal', color: 'rgb(115, 75, 209)' }}>{`Total rows selected: ${
               items.filter((item) => item.checked).length
             }`}</Text>
-            <Button
-              title="Delete"
-              color="red"
-              onPress={() => {
-                const remainingItems = items.filter((item) => !item.checked);
-                setItems(remainingItems);
-              }}
-            />
+            <View style={{paddingLeft: 30}}>
+              <Button
+                title="Delete"
+                color="rgb(115, 75, 209)"
+                onPress={() => {
+                  const remainingItems = items.filter((item) => !item.checked);
+                  setItems(remainingItems);
+                }}
+              />
+            </View>
+            
           </View>
-          <DataTable.Header>
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View style={{ width: '5%' }}>
-                <DataTable.Title
-                  style={{
-                    borderColor: 'grey',
-                    borderBottomWidth: 1,
-                    borderRightWidth: 1,
-                    justifyContent: 'center',
-                  }}
-                  textStyle={styles.titleStyle}
-                  onPress={() => {
-                    setAllSelected(!allSelected);
-                    const updatedItems = items.map((item) => ({
-                      ...item,
-                      checked: !allSelected,
-                    }));
 
-                    setItems(updatedItems);
-                  }}
-                >
-                  <Checkbox
-                    color={isV3 ? MD3Colors.error70 : MD2Colors.blue500}
-                    status={allSelected ? 'checked' : 'unchecked'}
-                  />
-                </DataTable.Title>
-              </View>
-              <View style={{ flex: 3, flexDirection: 'row' }}>
-                {columnVisibility[headers[0]] && (
+          <View style={{height: 'full', width: 'full', padding: 20,}}>
+
+            <DataTable.Header>
+              <View style={{ flex: 1, flexDirection: 'row', backgroundColor: 'rgb(231, 221, 255)', borderRadius: 10, position: 'relative', zIndex: 10, minWidth: '60%', }}>
+                <View style={{ width: '5%' }}>
                   <DataTable.Title
-                    sortDirection={sortAscending ? 'ascending' : 'descending'}
+                    style={{ flex: 1, flexDirection: 'row', justifyContent: 'center',}}
+                    textStyle={styles.titleStyle}
                     onPress={() => {
-                      setSortAscending(!sortAscending);
-                    }}
-                    // leftIconConfig={leftIconConfig}
-                    style={styles.first}
-                    textStyle={styles.titleStyle}
-                    onLeftIconPress={() => {}}
-                  >
-                    {headers[0]}
-                  </DataTable.Title>
-                )}
-                {columnVisibility[headers[1]] && (
-                  <DataTable.Title
-                    numberOfLines={2}
-                    onPress={() => {}}
-                    onLeftIconPress={() => {}}
-                    style={styles.first}
-                    textStyle={styles.titleStyle}
-                    onPressAsc={() => {
-                      setSortAscending(true);
-                    }}
-                    onPressDes={() => {
-                      setSortAscending(false);
+                      setAllSelected(!allSelected);
+                      const updatedItems = items.map((item) => ({
+                        ...item,
+                        checked: !allSelected,
+                      }));
+                      setItems(updatedItems);
                     }}
                   >
-                    {headers[1]}
+                    <Checkbox
+                      // color={isV3 ? MD3Colors.error70 : MD2Colors.blue500}
+                      color='rgb(115, 75, 209)'
+                      status={allSelected ? 'checked' : 'unchecked'}
+                    />
                   </DataTable.Title>
-                )}
-                {columnVisibility[headers[2]] && (
-                  <DataTable.Title
-                    onPress={() => {}}
-                    style={styles.first}
-                    textStyle={styles.titleStyle}
-                    onLeftIconPress={() => {}}
-                  >
-                    {headers[2]}
-                  </DataTable.Title>
-                )}
+                </View>
+                <View style={{ flex: 3, flexDirection: 'row' }}>
+                  {columnVisibility[headers[0]] && (
+                    <DataTable.Title
+                      sortDirection={sortAscending ? 'ascending' : 'descending'}
+                      onPress={() => {
+                        setSortAscending(!sortAscending);
+                      }}
+                      // leftIconConfig={leftIconConfig}
+                      style={styles.first}
+                      textStyle={styles.titleStyle}
+                      onLeftIconPress={() => {}}
+                    >
+                      {headers[0]}
+                    </DataTable.Title>
+                  )}
+                  {columnVisibility[headers[1]] && (
+                    <DataTable.Title
+                      numberOfLines={2}
+                      onPress={() => {}}
+                      onLeftIconPress={() => {}}
+                      style={styles.first}
+                      textStyle={styles.titleStyle}
+                      onPressAsc={() => {
+                        setSortAscending(true);
+                      }}
+                      onPressDes={() => {
+                        setSortAscending(false);
+                      }}
+                    >
+                      {headers[1]}
+                    </DataTable.Title>
+                  )}
+                  {columnVisibility[headers[2]] && (
+                    <DataTable.Title
+                      onPress={() => {}}
+                      style={styles.first}
+                      textStyle={styles.titleStyle}
+                      onLeftIconPress={() => {}}
+                    >
+                      {headers[2]}
+                    </DataTable.Title>
+                  )}
+                </View>
               </View>
-            </View>
-          </DataTable.Header>
-          <DataTable.Header>
-            <View
-              style={{
-                borderColor: 'grey',
-                borderBottomWidth: 1,
-                borderRightWidth: 1,
-                paddingHorizontal: 5,
-                width: '5%',
-              }}
-            >
-              {''}
-            </View>
-            {columnVisibility[headers[0]] && (
-              <DataTable.CellSearch
-                style={styles.searchStyle}
-                searchFilterData={filterData}
-                setFilteredOption={setFilteredOption}
-                onChangeText={(text) => {
-                  if (text.length) {
-                    if (filteredOption === 'Contain') {
-                      setItems(likeMatch(originalItems, headers[0], text));
-                    } else if (filteredOption === 'Does not contain') {
-                      setItems(unlikeMatch(originalItems, headers[0], text));
-                    } else if (filteredOption === 'Equals') {
-                      setItems(equalMatch(originalItems, headers[0], text));
-                    } else if (filteredOption === 'Does not equal') {
-                      setItems(notEqualMatch(originalItems, headers[0], text));
-                    } else if (filteredOption === 'Empty') {
-                      setItems(emptyMatch(originalItems, headers[0], text));
-                    } else if (filteredOption === 'Not empty') {
-                      setItems(notEmptyMatch(originalItems, headers[0], text));
-                    } else if (filteredOption === 'Starts with') {
-                      setItems(
-                        startsWithMatch(originalItems, headers[0], text)
-                      );
-                    } else if (filteredOption === 'Ends with') {
-                      setItems(endsWithMatch(originalItems, headers[0], text));
+            </DataTable.Header>
+
+            <DataTable.Header>
+              <View
+                style={{width: '5%',}} >
+                {''}
+              </View>
+              {columnVisibility[headers[0]] && (
+                <DataTable.CellSearch
+                  style={styles.searchStyle}
+                  searchFilterData={filterData}
+                  setFilteredOption={setFilteredOption}
+                  onChangeText={(text) => {
+                    if (text.length) {
+                      if (filteredOption === 'Contain') {
+                        setItems(likeMatch(originalItems, headers[0], text));
+                      } else if (filteredOption === 'Does not contain') {
+                        setItems(unlikeMatch(originalItems, headers[0], text));
+                      } else if (filteredOption === 'Equals') {
+                        setItems(equalMatch(originalItems, headers[0], text));
+                      } else if (filteredOption === 'Does not equal') {
+                        setItems(notEqualMatch(originalItems, headers[0], text));
+                      } else if (filteredOption === 'Empty') {
+                        setItems(emptyMatch(originalItems, headers[0], text));
+                      } else if (filteredOption === 'Not empty') {
+                        setItems(notEmptyMatch(originalItems, headers[0], text));
+                      } else if (filteredOption === 'Starts with') {
+                        setItems(
+                          startsWithMatch(originalItems, headers[0], text)
+                        );
+                      } else if (filteredOption === 'Ends with') {
+                        setItems(endsWithMatch(originalItems, headers[0], text));
+                      }
+                    } else {
+                      setItems(originalItems);
                     }
-                  } else {
-                    setItems(originalItems);
-                  }
-                }}
-                placeholder={'Search ' + headers[0]}
-              ></DataTable.CellSearch>
-            )}
-            {columnVisibility[headers[1]] && (
-              <DataTable.CellSearch
-                style={styles.searchStyle}
-                searchFilterData={filterData}
-                setFilteredOption={setFilteredOption}
-                onChangeText={(text) => {
-                  if (text.length) {
-                    if (filteredOption === 'Contain') {
-                      setItems(likeMatch(originalItems, headers[1], text));
-                    } else if (filteredOption === 'Does not contain') {
-                      setItems(unlikeMatch(originalItems, headers[1], text));
-                    } else if (filteredOption === 'Equals') {
-                      setItems(equalMatch(originalItems, headers[1], text));
-                    } else if (filteredOption === 'Does not equal') {
-                      setItems(notEqualMatch(originalItems, headers[1], text));
-                    } else if (filteredOption === 'Empty') {
-                      setItems(emptyMatch(originalItems, headers[1], text));
-                    } else if (filteredOption === 'Not empty') {
-                      setItems(notEmptyMatch(originalItems, headers[1], text));
-                    } else if (filteredOption === 'Starts with') {
-                      setItems(
-                        startsWithMatch(originalItems, headers[1], text)
-                      );
-                    } else if (filteredOption === 'Ends with') {
-                      setItems(endsWithMatch(originalItems, headers[1], text));
+                  }}
+                  placeholder={'Search ' + headers[0]}
+                ></DataTable.CellSearch>
+              )}
+              {columnVisibility[headers[1]] && (
+                <DataTable.CellSearch
+                  style={styles.searchStyle}
+                  searchFilterData={filterData}
+                  setFilteredOption={setFilteredOption}
+                  onChangeText={(text) => {
+                    if (text.length) {
+                      if (filteredOption === 'Contain') {
+                        setItems(likeMatch(originalItems, headers[1], text));
+                      } else if (filteredOption === 'Does not contain') {
+                        setItems(unlikeMatch(originalItems, headers[1], text));
+                      } else if (filteredOption === 'Equals') {
+                        setItems(equalMatch(originalItems, headers[1], text));
+                      } else if (filteredOption === 'Does not equal') {
+                        setItems(notEqualMatch(originalItems, headers[1], text));
+                      } else if (filteredOption === 'Empty') {
+                        setItems(emptyMatch(originalItems, headers[1], text));
+                      } else if (filteredOption === 'Not empty') {
+                        setItems(notEmptyMatch(originalItems, headers[1], text));
+                      } else if (filteredOption === 'Starts with') {
+                        setItems(
+                          startsWithMatch(originalItems, headers[1], text)
+                        );
+                      } else if (filteredOption === 'Ends with') {
+                        setItems(endsWithMatch(originalItems, headers[1], text));
+                      }
+                    } else {
+                      setItems(originalItems);
                     }
-                  } else {
-                    setItems(originalItems);
-                  }
-                }}
-                placeholder={'Search ' + headers[1]}
-              ></DataTable.CellSearch>
-            )}
-            {columnVisibility[headers[2]] && (
-              <DataTable.CellSearch
-                style={styles.searchStyle}
-                searchFilterData={filterData}
-                setFilteredOption={setFilteredOption}
-                onChangeText={(text) => {
-                  if (text.length) {
-                    if (filteredOption === 'Contain') {
-                      setItems(likeMatch(originalItems, headers[2], text));
-                    } else if (filteredOption === 'Does not contain') {
-                      setItems(unlikeMatch(originalItems, headers[2], text));
-                    } else if (filteredOption === 'Equals') {
-                      setItems(equalMatch(originalItems, headers[2], text));
-                    } else if (filteredOption === 'Does not equal') {
-                      setItems(notEqualMatch(originalItems, headers[2], text));
-                    } else if (filteredOption === 'Empty') {
-                      setItems(emptyMatch(originalItems, headers[2], text));
-                    } else if (filteredOption === 'Not empty') {
-                      setItems(notEmptyMatch(originalItems, headers[2], text));
-                    } else if (filteredOption === 'Starts with') {
-                      setItems(
-                        startsWithMatch(originalItems, headers[2], text)
-                      );
-                    } else if (filteredOption === 'Ends with') {
-                      setItems(endsWithMatch(originalItems, headers[2], text));
+                  }}
+                  placeholder={'Search ' + headers[1]}
+                ></DataTable.CellSearch>
+              )}
+              {columnVisibility[headers[2]] && (
+                <DataTable.CellSearch
+                  style={styles.searchStyle}
+                  searchFilterData={filterData}
+                  setFilteredOption={setFilteredOption}
+                  onChangeText={(text) => {
+                    if (text.length) {
+                      if (filteredOption === 'Contain') {
+                        setItems(likeMatch(originalItems, headers[2], text));
+                      } else if (filteredOption === 'Does not contain') {
+                        setItems(unlikeMatch(originalItems, headers[2], text));
+                      } else if (filteredOption === 'Equals') {
+                        setItems(equalMatch(originalItems, headers[2], text));
+                      } else if (filteredOption === 'Does not equal') {
+                        setItems(notEqualMatch(originalItems, headers[2], text));
+                      } else if (filteredOption === 'Empty') {
+                        setItems(emptyMatch(originalItems, headers[2], text));
+                      } else if (filteredOption === 'Not empty') {
+                        setItems(notEmptyMatch(originalItems, headers[2], text));
+                      } else if (filteredOption === 'Starts with') {
+                        setItems(
+                          startsWithMatch(originalItems, headers[2], text)
+                        );
+                      } else if (filteredOption === 'Ends with') {
+                        setItems(endsWithMatch(originalItems, headers[2], text));
+                      }
+                    } else {
+                      setItems(originalItems);
                     }
-                  } else {
-                    setItems(originalItems);
-                  }
-                }}
-                placeholder={'Search ' + headers[2]}
-              ></DataTable.CellSearch>
-            )}
-          </DataTable.Header>
-          <View style={{ flexDirection: 'row' }}>
-            <View style={{ width: '5%' }}>
-              {sortedItems.slice(from, to).map((item) => (
-                <DataTable.Row
+                  }}
+                  placeholder={'Search ' + headers[2]}
+                ></DataTable.CellSearch>
+              )}
+            </DataTable.Header>
+
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ width: '5%' }}>
+                {sortedItems.slice(from, to).map((item) => (
+                  <DataTable.Row
                   key={item.key}
                   style={styles.bodyStyle}
                   onPress={() => {}}
@@ -535,10 +531,13 @@ const DataTableExample = () => {
                         setItems(updatedItems);
                       }}
                     >
-                      <Checkbox
-                        color={isV3 ? MD3Colors.error70 : MD2Colors.blue500}
-                        status={item.checked ? 'checked' : 'unchecked'}
-                      />
+                      <View style={{paddingLeft: 20}}>
+                        <Checkbox
+                          // color={isV3 ? MD3Colors.error70 : MD2Colors.blue500}
+                          color='rgb(115, 75, 209)'
+                          status={item.checked ? 'checked' : 'unchecked'}
+                        />
+                      </View>
                     </TouchableOpacity>
                   </DataTable.Cell>
                 </DataTable.Row>
@@ -590,6 +589,8 @@ const DataTableExample = () => {
               ))}
             </View>
           </View>
+          </View>
+
         </DataTable>
         <DataTable.Pagination
             page={page}
@@ -615,36 +616,32 @@ const styles = StyleSheet.create({
   },
   first: {
     flex: 2,
-    borderColor: 'grey',
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    paddingHorizontal: 5,
-    minWidth: '60%',
+    // borderColor: 'grey',
+    // borderBottomWidth: 1,
+    // borderRightWidth: 1,
+    // paddingHorizontal: 5,
+    // minWidth: '60%',
+    justifyContent: 'left',
+    paddingLeft: 10
   },
   titleStyle: {
     fontWeight: 'bold',
     fontSize: 16,
   },
   bodyStyle: {},
-  bodyStyleItemCheckBox: {
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    minWidth: '20%',
-  },
   bodyStyleItem: {
     paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    minWidth: '60%',
+    // borderBottomWidth: 1,
+    // borderRightWidth: 1,
+    // minWidth: '60%',
+    justifyContent: 'left',
+    paddingLeft: 20
   },
   searchStyle: {
-    flex: 2,
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
+    // borderBottomWidth: 1,
+    // borderRightWidth: 1,
+    // minWidth: '57%',
     paddingHorizontal: 5,
-    minWidth: '57%',
   },
   modalView: {
     margin: 20,
@@ -688,5 +685,4 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
 });
-
 export default DataTableExample;
