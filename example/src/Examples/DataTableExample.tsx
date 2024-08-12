@@ -512,7 +512,7 @@ const DataTableExample = () => {
                   onPress={() => {}}
                 >
                   <DataTable.Cell
-                    style={styles.bodyStyleItem}
+                    style={styles.bodyStyleItemCheckBox}
                     onPress={() => {
                       console.log('hello........');
                     }}
@@ -568,29 +568,30 @@ const DataTableExample = () => {
                     </DataTable.Cell>
                   )}
                { columnVisibility[headers[1]] &&  <DataTable.Cell style={styles.bodyStyleItem} numeric>
-                    {headers[1] == 'Dessert'
-                      ? item.Dessert
-                      : headers[1] == 'Calories'
-                      ? item.Calories
-                      : headers[1] == 'Fat'
-                      ? item.Fat
-                      : ''}
+                      {headers[1] == 'Dessert'
+                        ? item.Dessert
+                        : headers[1] == 'Calories'
+                        ? item.Calories
+                        : headers[1] == 'Fat'
+                        ? item.Fat
+                        : ''}
                   </DataTable.Cell>}
 
                 {  columnVisibility[headers[2]] &&   <DataTable.Cell style={styles.bodyStyleItem} numeric>
-                    {headers[2] == 'Dessert'
-                      ? item.Dessert
-                      : headers[2] == 'Calories'
-                      ? item.Calories
-                      : headers[2] == 'Fat'
-                      ? item.Fat
-                      : ''}
+                      {headers[2] == 'Dessert'
+                        ? item.Dessert
+                        : headers[2] == 'Calories'
+                        ? item.Calories
+                        : headers[2] == 'Fat'
+                        ? item.Fat
+                        : ''}
                   </DataTable.Cell>}
                 </DataTable.Row>
               ))}
             </View>
           </View>
-          <DataTable.Pagination
+        </DataTable>
+        <DataTable.Pagination
             page={page}
             numberOfPages={Math.ceil(sortedItems.length / itemsPerPage)}
             onPageChange={(page) => setPage(page)}
@@ -601,7 +602,6 @@ const DataTableExample = () => {
             showFastPaginationControls
             selectPageDropdownLabel={'Rows per page'}
           />
-        </DataTable>
       </Card>
     </ScreenWrapper>
   );
@@ -619,22 +619,32 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderRightWidth: 1,
     paddingHorizontal: 5,
+    minWidth: '60%',
   },
   titleStyle: {
     fontWeight: 'bold',
     fontSize: 16,
   },
   bodyStyle: {},
+  bodyStyleItemCheckBox: {
+    borderBottomWidth: 1,
+    borderRightWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minWidth: '20%',
+  },
   bodyStyleItem: {
     paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderRightWidth: 1,
-    paddingHorizontal: 5,
+    minWidth: '60%',
   },
   searchStyle: {
+    flex: 2,
     borderBottomWidth: 1,
     borderRightWidth: 1,
     paddingHorizontal: 5,
+    minWidth: '57%',
   },
   modalView: {
     margin: 20,

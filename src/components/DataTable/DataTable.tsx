@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Animated,
   Text,
+  ScrollView,
 } from 'react-native';
 
 import DataTableCell from './DataTableCell';
@@ -211,7 +212,7 @@ const DataTable = ({
         </TouchableOpacity>
       )}
       <View style={{ flexDirection: 'row' }}>
-        <View style={{ flex: 3 }}>{children}</View>
+        <ScrollView contentContainerStyle= {{flexDirection: 'column'}} horizontal={true}>{children}</ScrollView>
 
         {isVisible && (
           <View style={{ marginLeft: 10 }}>
