@@ -293,7 +293,7 @@ const DataTableExample = () => {
           handleCheckboxPress={handleCheckboxPress}
           checkedKeys={headers}
         >
-          <View style={{ margin: 5, marginRight: 5, flexDirection: 'row' }}>
+          <View style={{ margin: 5,alignItems: 'center', flexDirection: 'row' }}>
             <Text style={{ marginHorizontal: 10 }}>{`Total rows selected ${
               items.filter((item) => item.checked).length
             }`}</Text>
@@ -308,13 +308,14 @@ const DataTableExample = () => {
           </View>
           <DataTable.Header>
             <View style={{ flex: 1, flexDirection: 'row' }}>
-              <View style={{ flex: 1 }}>
+              <View style={{ width: '5%' }}>
                 <DataTable.Title
                   style={{
                     borderColor: 'grey',
                     borderBottomWidth: 1,
                     borderRightWidth: 1,
-                    paddingHorizontal: 5}}
+                    justifyContent: 'center',
+                  }}
                   textStyle={styles.titleStyle}
                   onPress={() => {
                     setAllSelected(!allSelected);
@@ -372,17 +373,17 @@ const DataTableExample = () => {
             </View>
           </DataTable.Header>
           <DataTable.Header>
-            <DataTable.Cell
+            <View
               style={{
                 borderColor: 'grey',
                 borderBottomWidth: 1,
                 borderRightWidth: 1,
                 paddingHorizontal: 5,
-                width: 2,
+                width: '5%',
               }}
             >
               {''}
-            </DataTable.Cell>
+            </View>
             <DataTable.CellSearch
               style={styles.searchStyle}
               searchFilterData={filterData}
@@ -472,7 +473,8 @@ const DataTableExample = () => {
             ></DataTable.CellSearch>
           </DataTable.Header>
           <View style={{ flexDirection: 'row' }}>
-            <View>
+            <View 
+                    style={{ width: '5%',}}>
               {sortedItems.slice(from, to).map((item) => (
                 <DataTable.Row
                   key={item.key}
