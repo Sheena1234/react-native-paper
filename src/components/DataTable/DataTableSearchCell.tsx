@@ -7,16 +7,13 @@ import {
   GestureResponderEvent,
   View,
   TouchableOpacity,
-  Modal,
   FlatList,
 } from 'react-native';
-
 import type { $RemoveChildren } from '../../types';
 import TouchableRipple from '../TouchableRipple/TouchableRipple';
 import Text from '../Typography/Text';
 import Searchbar from '../Searchbar';
 import MaterialCommunityIcon from '../MaterialCommunityIcon';
-import { log } from 'console';
 import Popover, { usePopover } from '../ModalPopover';
 
 export type Props = $RemoveChildren<typeof TouchableRipple> & {
@@ -212,30 +209,30 @@ const DataTableSearchCell = ({
   );
 };
 
-const CellContent = ({
-  children,
-  textStyle,
-  maxFontSizeMultiplier,
-  testID,
-}: Pick<
-  Props,
-  'children' | 'textStyle' | 'testID' | 'maxFontSizeMultiplier'
->) => {
-  if (React.isValidElement(children)) {
-    return children;
-  }
+// {const CellContent = ({
+//   children,
+//   textStyle,
+//   maxFontSizeMultiplier,
+//   testID,
+// }: Pick<
+//   Props,
+//   'children' | 'textStyle' | 'testID' | 'maxFontSizeMultiplier'
+// >) => {
+//   if (React.isValidElement(children)) {
+//     return children;
+//   }
 
-  return (
-    <Text
-      style={[textStyle, { padding: 10 }]}
-      numberOfLines={1}
-      maxFontSizeMultiplier={maxFontSizeMultiplier}
-      testID={`${testID}-text-container`}
-    >
-      {children}
-    </Text>
-  );
-};
+//   return (
+//     <Text
+//       style={[textStyle, { padding: 10 }]}
+//       numberOfLines={1}
+//       maxFontSizeMultiplier={maxFontSizeMultiplier}
+//       testID={`${testID}-text-container`}
+//     >
+//       {children}
+//     </Text>
+//   );
+// };}
 
 DataTableSearchCell.displayName = 'DataTable.Cell';
 

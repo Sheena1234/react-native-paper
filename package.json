@@ -1,5 +1,5 @@
 {
-  "name": "react-native-paper",
+  "name": "@sheena/react-native-paper",
   "version": "5.12.3",
   "description": "Material design for React Native",
   "main": "lib/commonjs/index.js",
