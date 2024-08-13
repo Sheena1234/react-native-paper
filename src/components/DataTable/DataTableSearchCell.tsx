@@ -60,7 +60,7 @@ export type Props = $RemoveChildren<typeof TouchableRipple> & {
   /**
    * Data that is displayed in the pop up to filter on search.
    */
-  searchFilterData?:any;
+  searchFilterData?: any;
 
   /**
    * On clicking of a value in the popover, it is stored in the the below use state
@@ -129,26 +129,11 @@ const DataTableSearchCell = ({
   );
 
   return (
-    <View
+    <TouchableRipple
       {...rest}
       testID={testID}
       style={[styles.container, numeric && styles.right, style]}
     >
-      {/* <CellContent
-        textStyle={textStyle}
-        testID={testID}
-        maxFontSizeMultiplier={maxFontSizeMultiplier}
-      > */}
-      {/* <View
-        style={{
-          width: '100%',
-          height: '100%',
-          overflow: 'hidden',
-          padding: 5,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
-      > */}
       <Searchbar
         placeholder={placeholder}
         onChangeText={onChangeText}
@@ -158,17 +143,14 @@ const DataTableSearchCell = ({
       />
 
       {iconFilter}
-      {/* </View> */}
+     
       <Popover
         popoverStyle={{
-          top: origin.y,
-          left: origin.x,
-          width: 200
+          width: 200,
         }}
-        arrowSize={{width: 0, height: 0}}
+        arrowSize={{ width: 0, height: 0 }}
         contentStyle={{
           padding: 16,
-          //  backgroundColor: 'pink',
           borderRadius: 8,
         }}
         arrowStyle={{
@@ -176,7 +158,7 @@ const DataTableSearchCell = ({
         }}
         backgroundStyle={
           {
-            // backgroundColor: 'rgba(0, 0, 255, 0.5)',
+        
           }
         }
         visible={popoverVisible}
@@ -186,26 +168,26 @@ const DataTableSearchCell = ({
         titleHeader={true}
       >
         <View>
-        <FlatList
-          data={searchFilterData}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <View>
-              <TouchableOpacity
-                onPress={() => {
-                  setFilteredOption(item.name);
-                  closePopover();
-                }}
-              >
-                <Text style={{padding: 5}}>{item.name}</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
+          <FlatList
+            data={searchFilterData}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View>
+                <TouchableOpacity
+                  onPress={() => {
+                    setFilteredOption(item.name);
+                    closePopover();
+                  }}
+                >
+                  <Text style={{ padding: 5 }}>{item.name}</Text>
+                </TouchableOpacity>
+              </View>
+            )}
+          />
         </View>
       </Popover>
       {/* </CellContent> */}
-    </View>
+    </TouchableRipple>
   );
 };
 
@@ -241,7 +223,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
     //  borderRightWidth : 0.5
   },
   right: {

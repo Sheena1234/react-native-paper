@@ -5,13 +5,14 @@ function findKey<T>(map: { [key: string]: T }, fn: (item: T) => boolean) {
       return keys[i]
     }
   }
+  return -1
 }
 
 function findIndex<T>(arr: T[], fn: (item: T) => boolean) {
   for (let i = 0; i < arr.length; i++) {
     if (fn(arr[i])) {
       return i
-    }
+    } 
   }
   return -1
 }

@@ -30,7 +30,7 @@ const mappings = ast.program.body.reduce((acc, declaration, index, self) => {
       declaration.specifiers.forEach((specifier) => {
         acc[specifier.exported.name] = {
           path: relative(declaration.source.value),
-          name: specifier.local.name,
+          name: specifier.loc.name,
         };
       });
     } else {

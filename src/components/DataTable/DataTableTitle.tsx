@@ -9,7 +9,6 @@ import {
   TextStyle,
   TouchableOpacity,
   ViewStyle,
-  Modal,
   View,
 } from 'react-native';
 
@@ -208,8 +207,8 @@ const DataTableTitle = ({
       {leftIconConfig && iconFilter}
       {leftIconConfig && <Popover
         popoverStyle={{
-          top: origin.y,
-          left: origin.x,
+          top: origin,
+          left: origin,
         }}
         arrowSize={{width: 0, height: 0}}
         contentStyle={{

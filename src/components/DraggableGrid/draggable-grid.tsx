@@ -144,6 +144,7 @@ export const DraggableGrid = function<DataType extends IBaseItemType>(
       x: I18nManager.isRTL ? -moveX : moveX,
       y: moveY,
     })
+    return true;
   }
   function onHandMove(_: GestureResponderEvent, gestureState: PanResponderGestureState) {
     const activeItem = getActiveItem()
@@ -188,6 +189,7 @@ export const DraggableGrid = function<DataType extends IBaseItemType>(
       orderMap[activeItem.key].order = closetOrder
       props.onResetSort && props.onResetSort(getSortData())
     }
+    return true;
   }
   function onHandRelease() {
     const activeItem = getActiveItem()
@@ -197,6 +199,7 @@ export const DraggableGrid = function<DataType extends IBaseItemType>(
     activeItem.currentPosition.flattenOffset()
     moveBlockToBlockOrderPosition(activeItem.key)
     setActiveItemIndex(undefined)
+    return true;
   }
   function resetBlockPositionByOrder(activeItemOrder: number, insertedPositionOrder: number) {
     let disabledReSortedItemCount = 0
@@ -225,6 +228,7 @@ export const DraggableGrid = function<DataType extends IBaseItemType>(
         }
       }
     }
+    return true;
   }
   function moveBlockToBlockOrderPosition(itemKey: string | number) {
     const itemIndex = findIndex(items, item => `${item.key}` === `${itemKey}`)

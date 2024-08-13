@@ -235,14 +235,14 @@ export class Popover extends React.PureComponent<PopoverProps, PopoverState> {
     }
   };
 
-  private getTranslateOrigin = () => {
-    const { contentSize, origin, anchor } = this.state;
-    const popoverCenter = {
-      x: origin.x + contentSize.width / 2,
-      y: origin.y + contentSize.height / 2,
-    };
-    return { x: anchor.x - popoverCenter.x, y: anchor.y - popoverCenter.y };
-  };
+  // private getTranslateOrigin = () => {
+  //   const { contentSize, origin, anchor } = this.state;
+  //   const popoverCenter = {
+  //     x: origin.x + contentSize.width / 2,
+  //     y: origin.y + contentSize.height / 2,
+  //   };
+  //   return { x: anchor.x - popoverCenter.x, y: anchor.y - popoverCenter.y };
+  // };
 
   UNSAFE_componentWillReceiveProps(nextProps: PopoverProps) {
     const willBeVisible = nextProps.visible;
@@ -292,7 +292,6 @@ export class Popover extends React.PureComponent<PopoverProps, PopoverState> {
 
   private computeStyles = () => {
     const { animation, anchor, origin } = this.state;
-    const translateOrigin = this.getTranslateOrigin();
     const arrowSize = this.props.arrowSize;
 
     // Create the arrow from a rectangle with the appropriate borderXWidth set

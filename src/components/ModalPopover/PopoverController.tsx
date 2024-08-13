@@ -81,6 +81,7 @@ export class PopoverController extends React.PureComponent<Props, State> {
     y,
   ) => {
     const dimensions = Dimensions.get('window');
+    console.log(x0, y0)
     this.setState({
       showPopover: true,
       popoverAnchor: {

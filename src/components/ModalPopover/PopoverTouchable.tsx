@@ -76,6 +76,7 @@ export class PopoverTouchable extends React.PureComponent<Props, State> {
     x,
     y,
   ) => {
+    console.log(x0, y0)
     this.setState(
       {
         showPopover: true,
