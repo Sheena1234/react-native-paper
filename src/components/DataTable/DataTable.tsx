@@ -167,7 +167,7 @@ const DataTable = ({
           }}
         >
           <Checkbox
-            color={'blue'}
+            color='rgb(115, 75, 209)'
             status={
               config.columnVisibility[item.name] ? 'checked' : 'unchecked'
             }
@@ -202,17 +202,19 @@ const DataTable = ({
               { alignSelf: 'flex-end' },
             ]}
           >
-            <MaterialCommunityIcon
-              name="cog-outline"
-              size={16}
-              color={'grey'}
-              direction={'ltr'}
-            />
+            <View style={{paddingRight: 20, paddingTop: 20}}>
+              <MaterialCommunityIcon
+                name="cog-outline"
+                size={20}
+                color={'rgb(115, 75, 209)'}
+                direction={'ltr'}
+              />
+            </View>
           </Animated.View>
         </TouchableOpacity>
       )}
       <View style={{ flexDirection: 'row' }}>
-        <ScrollView contentContainerStyle= {{flexDirection: 'column'}} horizontal={true}>{children}</ScrollView>
+        <ScrollView contentContainerStyle= {{flexDirection: 'column', flex: 3}} horizontal={true}>{children}</ScrollView>
 
         {isVisible && (
           <View style={{ marginLeft: 10 }}>
