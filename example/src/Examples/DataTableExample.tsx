@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, View, Text, Button } from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  View,
+  Text,
+  Button,
+} from 'react-native';
 import {
   DataTable,
   Card,
@@ -9,7 +16,7 @@ import {
 } from 'react-native-paper';
 import ScreenWrapper from '../ScreenWrapper';
 import { useExampleTheme } from '..';
-import { ScrollView } from 'react-native-gesture-handler';
+import { dataItems } from './data';
 type ItemsState = Array<{
   key: number;
   Dessert: string;
@@ -23,127 +30,28 @@ const DataTableExample = () => {
   const [page, setPage] = React.useState<number>(0);
   const [visible, setVisible] = React.useState<boolean>(false);
   const [filteredOption, setFilteredOption] = React.useState('Contain');
-  const [originalItems] = React.useState<ItemsState>([
-    {
-      key: 1,
-      Dessert: 'Cupcake',
-      Calories: 356,
-      Fat: 16,
-      checked: false,
-    },
-    {
-      key: 2,
-      Dessert: 'Eclair',
-      Calories: 262,
-      Fat: 16,
-      checked: false,
-    },
-    {
-      key: 3,
-      Dessert: 'Frozen yogurt',
-      Calories: 159,
-      Fat: 6,
-      checked: false,
-    },
-    {
-      key: 4,
-      Dessert: 'Gingerbread',
-      Calories: 305,
-      Fat: 3.7,
-
-      checked: false,
-    },
-    {
-      key: 5,
-      Dessert: 'Ice cream sandwich',
-      Calories: 237,
-      Fat: 9,
-      checked: false,
-    },
-    {
-      key: 6,
-      Dessert: 'Jelly Bean',
-      Calories: 375,
-      Fat: 0,
-      checked: false,
-    },
-  ]);
-  const [items, setItems] = React.useState<ItemsState>([
-    {
-      key: 1,
-      Dessert: 'Cupcake',
-      Calories: 356,
-      Fat: 16,
-      checked: false,
-    },
-    {
-      key: 2,
-      Dessert: 'Eclair',
-      Calories: 262,
-      Fat: 16,
-      checked: false,
-    },
-    {
-      key: 3,
-      Dessert: 'Frozen yogurt',
-      Calories: 159,
-      Fat: 6,
-      checked: false,
-    },
-    {
-      key: 4,
-      Dessert: 'Gingerbread',
-      Calories: 305,
-      Fat: 3.7,
-      checked: false,
-    },
-    {
-      key: 5,
-      Dessert: 'Ice cream sandwich',
-      Calories: 237,
-      Fat: 9,
-      checked: false,
-    },
-    {
-      key: 6,
-      Dessert: 'Jelly Bean',
-      Calories: 375,
-      Fat: 0,
-      checked: false,
-    },
-  ]);
+  const [originalItems] = React.useState<ItemsState>(dataItems);
+  const [items, setItems] = React.useState<ItemsState>(dataItems);
   const [columnVisibility, setColumnVisibility] = React.useState({
     Dessert: true,
     Calories: true,
     Fat: true,
+    Ingredients: true,
+    Description: true,
   });
 
-  const leftIconConfig = [
-    {
-      id: 1,
-      title: 'Sort Ascending',
-      onPress: () => {
-        setSortAscending(true);
-      },
-      leadingIcon: 'arrow-up',
-      disabled: sortAscending ? true : false,
-    },
-    {
-      id: 1,
-      title: 'Sort Descending',
-      onPress: () => {
-        setSortAscending(false);
-      },
-      leadingIcon: 'arrow-down',
-      disabled: !sortAscending ? true : false,
-    },
-  ];
   const [numberOfItemsPerPageList] = React.useState([10, 200]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
     numberOfItemsPerPageList[0]
   );
   const [allSelected, setAllSelected] = React.useState<boolean>(false);
-  const [headers, setHeaders] = React.useState(['Dessert', 'Calories', 'Fat']);
+  const [headers, setHeaders] = React.useState([
+    'Dessert',
+    'Calories',
+    'Fat',
+    'Ingredients',
+    'Description',
+  ]);
   const { isV3 } = useExampleTheme();
   const sortedItems = items
     .slice()
@@ -160,7 +68,7 @@ const DataTableExample = () => {
   }, [itemsPerPage]);
 
   const likeMatch = (array, key, searchStr) => {
-    if (key === 'Calories' || key === 'Fat') {
+    if (key === 'Calories' || key === 'Fat' ) {
       return array.filter((item) => {
         const itemValue = item[key].toString();
         const searchValue = searchStr.toString();
@@ -173,7 +81,7 @@ const DataTableExample = () => {
   };
 
   const unlikeMatch = (array, key, searchStr) => {
-    if (key === 'Calories' || key === 'Fat') {
+    if (key === 'Calories' || key === 'Fat' ) {
       return array.filter((item) => {
         const itemValue = item[key].toString();
         const searchValue = searchStr.toString();
@@ -186,7 +94,7 @@ const DataTableExample = () => {
   };
 
   const equalMatch = (array, key, searchStr) => {
-    if (key === 'Calories' || key === 'Fat') {
+    if (key === 'Calories' || key === 'Fat' ) {
       return array.filter((item) => {
         const itemValue = item[key].toString();
         const searchValue = searchStr.toString();
@@ -199,7 +107,7 @@ const DataTableExample = () => {
   };
 
   const notEqualMatch = (array, key, searchStr) => {
-    if (key === 'Calories' || key === 'Fat') {
+    if (key === 'Calories' || key === 'Fat' ) {
       return array.filter((item) => {
         const itemValue = item[key].toString();
         const searchValue = searchStr.toString();
@@ -240,7 +148,7 @@ const DataTableExample = () => {
   };
 
   const startsWithMatch = (array, key, searchStr) => {
-    if (key === 'Calories' || key === 'Fat') {
+    if (key === 'Calories' || key === 'Fat' ) {
       return array.filter((item) => {
         const itemValue = item[key].toString();
         const searchValue = searchStr.toString();
@@ -253,7 +161,7 @@ const DataTableExample = () => {
   };
 
   const endsWithMatch = (array, key, searchStr) => {
-    if (key === 'Calories' || key === 'Fat') {
+    if (key === 'Calories' || key === 'Fat' ) {
       return array.filter((item) => {
         const itemValue = item[key].toString();
         const searchValue = searchStr.toString();
@@ -388,6 +296,36 @@ const DataTableExample = () => {
                     {headers[2]}
                   </DataTable.Title>
                 )}
+                {columnVisibility[headers[3]] && (
+                  <DataTable.Title
+                    onPress={() => {}}
+                    style={styles.first}
+                    textStyle={styles.titleStyle}
+                    onLeftIconPress={() => {}}
+                  >
+                    {headers[3]}
+                  </DataTable.Title>
+                )}
+                {columnVisibility[headers[4]] && (
+                  <DataTable.Title
+                    onPress={() => {}}
+                    style={styles.first}
+                    textStyle={styles.titleStyle}
+                    onLeftIconPress={() => {}}
+                  >
+                    {headers[4]}
+                  </DataTable.Title>
+                )}
+                {columnVisibility[headers[5]] && (
+                  <DataTable.Title
+                    onPress={() => {}}
+                    style={styles.first}
+                    textStyle={styles.titleStyle}
+                    onLeftIconPress={() => {}}
+                  >
+                    {headers[5]}
+                  </DataTable.Title>
+                )}
               </View>
             </View>
           </DataTable.Header>
@@ -502,6 +440,72 @@ const DataTableExample = () => {
                 placeholder={'Search ' + headers[2]}
               ></DataTable.CellSearch>
             )}
+            {columnVisibility[headers[3]] && (
+              <DataTable.CellSearch
+                style={styles.searchStyle}
+                searchFilterData={filterData}
+                setFilteredOption={setFilteredOption}
+                onChangeText={(text) => {
+                  if (text.length) {
+                    if (filteredOption === 'Contain') {
+                      setItems(likeMatch(originalItems, headers[3], text));
+                    } else if (filteredOption === 'Does not contain') {
+                      setItems(unlikeMatch(originalItems, headers[3], text));
+                    } else if (filteredOption === 'Equals') {
+                      setItems(equalMatch(originalItems, headers[3], text));
+                    } else if (filteredOption === 'Does not equal') {
+                      setItems(notEqualMatch(originalItems, headers[3], text));
+                    } else if (filteredOption === 'Empty') {
+                      setItems(emptyMatch(originalItems, headers[3], text));
+                    } else if (filteredOption === 'Not empty') {
+                      setItems(notEmptyMatch(originalItems, headers[3], text));
+                    } else if (filteredOption === 'Starts with') {
+                      setItems(
+                        startsWithMatch(originalItems, headers[3], text)
+                      );
+                    } else if (filteredOption === 'Ends with') {
+                      setItems(endsWithMatch(originalItems, headers[3], text));
+                    }
+                  } else {
+                    setItems(originalItems);
+                  }
+                }}
+                placeholder={'Search ' + headers[3]}
+              ></DataTable.CellSearch>
+            )}
+            {columnVisibility[headers[4]] && (
+              <DataTable.CellSearch
+                style={styles.searchStyle}
+                searchFilterData={filterData}
+                setFilteredOption={setFilteredOption}
+                onChangeText={(text) => {
+                  if (text.length) {
+                    if (filteredOption === 'Contain') {
+                      setItems(likeMatch(originalItems, headers[4], text));
+                    } else if (filteredOption === 'Does not contain') {
+                      setItems(unlikeMatch(originalItems, headers[4], text));
+                    } else if (filteredOption === 'Equals') {
+                      setItems(equalMatch(originalItems, headers[4], text));
+                    } else if (filteredOption === 'Does not equal') {
+                      setItems(notEqualMatch(originalItems, headers[4], text));
+                    } else if (filteredOption === 'Empty') {
+                      setItems(emptyMatch(originalItems, headers[4], text));
+                    } else if (filteredOption === 'Not empty') {
+                      setItems(notEmptyMatch(originalItems, headers[4], text));
+                    } else if (filteredOption === 'Starts with') {
+                      setItems(
+                        startsWithMatch(originalItems, headers[4], text)
+                      );
+                    } else if (filteredOption === 'Ends with') {
+                      setItems(endsWithMatch(originalItems, headers[4], text));
+                    }
+                  } else {
+                    setItems(originalItems);
+                  }
+                }}
+                placeholder={'Search ' + headers[4]}
+              ></DataTable.CellSearch>
+            )}
           </DataTable.Header>
           <View style={{ flexDirection: 'row' }}>
             <View style={{ width: '5%' }}>
@@ -558,50 +562,46 @@ const DataTableExample = () => {
                         console.log('hellooooo');
                       }}
                     >
-                      {headers[0] == 'Dessert'
-                        ? item.Dessert
-                        : headers[0] == 'Calories'
-                        ? item.Calories
-                        : headers[0] == 'Fat'
-                        ? item.Fat
-                        : ''}
+                      {item[headers[0]]}
                     </DataTable.Cell>
                   )}
-               { columnVisibility[headers[1]] &&  <DataTable.Cell style={styles.bodyStyleItem} numeric>
-                      {headers[1] == 'Dessert'
-                        ? item.Dessert
-                        : headers[1] == 'Calories'
-                        ? item.Calories
-                        : headers[1] == 'Fat'
-                        ? item.Fat
-                        : ''}
-                  </DataTable.Cell>}
+                  {columnVisibility[headers[1]] && (
+                    <DataTable.Cell style={styles.bodyStyleItem} numeric>
+                      {item[headers[1]]}
+                    </DataTable.Cell>
+                  )}
 
-                {  columnVisibility[headers[2]] &&   <DataTable.Cell style={styles.bodyStyleItem} numeric>
-                      {headers[2] == 'Dessert'
-                        ? item.Dessert
-                        : headers[2] == 'Calories'
-                        ? item.Calories
-                        : headers[2] == 'Fat'
-                        ? item.Fat
-                        : ''}
-                  </DataTable.Cell>}
+                  {columnVisibility[headers[2]] && (
+                    <DataTable.Cell style={styles.bodyStyleItem} numeric>
+                       {item[headers[2]]}
+                    </DataTable.Cell>
+                  )}
+                   {columnVisibility[headers[3]] && (
+                    <DataTable.Cell style={styles.bodyStyleItem} >
+                       {item[headers[3]]}
+                    </DataTable.Cell>
+                  )}
+                    {columnVisibility[headers[4]] && (
+                    <DataTable.Cell style={styles.bodyStyleItem} >
+                       {item[headers[4]]}
+                    </DataTable.Cell>
+                  )}
                 </DataTable.Row>
               ))}
             </View>
           </View>
         </DataTable>
         <DataTable.Pagination
-            page={page}
-            numberOfPages={Math.ceil(sortedItems.length / itemsPerPage)}
-            onPageChange={(page) => setPage(page)}
-            label={`${from + 1}-${to} of ${sortedItems.length}`}
-            numberOfItemsPerPageList={numberOfItemsPerPageList}
-            numberOfItemsPerPage={itemsPerPage}
-            onItemsPerPageChange={onItemsPerPageChange}
-            showFastPaginationControls
-            selectPageDropdownLabel={'Rows per page'}
-          />
+          page={page}
+          numberOfPages={Math.ceil(sortedItems.length / itemsPerPage)}
+          onPageChange={(page) => setPage(page)}
+          label={`${from + 1}-${to} of ${sortedItems.length}`}
+          numberOfItemsPerPageList={numberOfItemsPerPageList}
+          numberOfItemsPerPage={itemsPerPage}
+          onItemsPerPageChange={onItemsPerPageChange}
+          showFastPaginationControls
+          selectPageDropdownLabel={'Rows per page'}
+        />
       </Card>
     </ScreenWrapper>
   );
@@ -619,7 +619,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderRightWidth: 1,
     paddingHorizontal: 5,
-    minWidth: '60%',
+    minWidth: '20%',
   },
   titleStyle: {
     fontWeight: 'bold',
@@ -637,14 +637,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderBottomWidth: 1,
     borderRightWidth: 1,
-    minWidth: '60%',
+    minWidth: '20%',
   },
   searchStyle: {
     flex: 2,
     borderBottomWidth: 1,
     borderRightWidth: 1,
     paddingHorizontal: 5,
-    minWidth: '57%',
+    minWidth: '18%',
   },
   modalView: {
     margin: 20,

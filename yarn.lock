@@ -1676,6 +1676,13 @@
   dependencies:
     "cross-spawn" "^6.0.5"
 
+"@expo/vector-icons@^14.0.2":
+  "integrity" "sha512-70LpmXQu4xa8cMxjp1fydgRPsalefnHaXLzIwaHMEzcZhnyjw2acZz8azRrZOslPVAWlxItOa2Dd7WtD/kI+CA=="
+  "resolved" "https://registry.npmjs.org/@expo/vector-icons/-/vector-icons-14.0.2.tgz"
+  "version" "14.0.2"
+  dependencies:
+    "prop-types" "^15.8.1"
+
 "@hapi/hoek@^9.0.0":
   "integrity" "sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ=="
   "resolved" "https://registry.npmjs.org/@hapi/hoek/-/hoek-9.3.0.tgz"
