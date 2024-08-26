@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
   StyleSheet,
   TouchableOpacity,
-  ScrollView,
   View,
   Text,
   Button,
@@ -14,9 +13,16 @@ import {
   MD2Colors,
   MD3Colors,
 } from 'react-native-paper';
+
+import { saveAs } from 'file-saver';
+import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
 import ScreenWrapper from '../ScreenWrapper';
 import { useExampleTheme } from '..';
 import { dataItems } from './data';
+
 type ItemsState = Array<{
   key: number;
   Dessert: string;
@@ -195,6 +201,45 @@ const DataTableExample = () => {
     });
   };
 
+  const exportDataToExcel = (data) => {
+    // Create a worksheet from the data
+    const worksheet = XLSX.utils.json_to_sheet(data);
+  
+    // Create a new workbook and append the worksheet
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+  
+    // Generate a binary string representation of the workbook
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+  
+    // Convert the Excel buffer to a Blob
+    const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+  
+    // Trigger the file download
+    saveAs(blob, 'selected-data.xlsx');
+
+  };
+
+  const exportDataToPDF = (headers, data) => {
+    // Initialize jsPDF
+    const doc = new jsPDF();
+
+    // Convert headers state to table column headers for PDF
+    const columns = headers.map((header) => header);
+    
+    // Map data to match table column structure
+    const rows = data.map((item) => headers.map((header) => item[header]));
+
+    // Add the autoTable to the document
+    doc.autoTable({
+      head: [columns],
+      body: rows,
+    });
+
+    // Save the PDF
+    doc.save('table-data.pdf');
+  };
+
   return (
     <ScreenWrapper contentContainerStyle={styles.content}>
       <Card>
@@ -226,6 +271,28 @@ const DataTableExample = () => {
                 setItems(remainingItems);
               }}
             />
+            <View style={{ marginLeft: 10 }}>
+              <Button
+                title="Export To XlSX"
+                color="blue"
+                onPress={() => {
+                  console.log('Export selected items as Excel sheet');
+                  const checkedItems = items.filter((item) => item.checked);
+                  exportDataToExcel(checkedItems);
+                }}
+              />
+            </View>
+            <View style={{ marginLeft: 10 }}>
+              <Button
+                title="Export To PDF"
+                color="blue"
+                onPress={() => {
+                  console.log('Export selected items as PDF');
+                  const checkedItems = items.filter((item) => item.checked);
+                  exportDataToPDF(headers, checkedItems);
+                }}
+              />
+            </View>
           </View>
           <DataTable.Header>
             <View style={{ flex: 1, flexDirection: 'row' }}>

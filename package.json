@@ -52,6 +52,7 @@
     "@expo/vector-icons": "^14.0.2",
     "color": "^3.1.2",
     "lodash": "^4.17.21",
+    "react-native-fs": "^2.20.0",
     "use-latest-callback": "^0.1.5"
   },
   "devDependencies": {
